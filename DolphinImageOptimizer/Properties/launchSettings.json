@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FolderImageOptimizer": {
+      "commandName": "Project",
+      "commandLineArgs": "--source \"C:\\Users\\Sewer56\\Downloads\\Texture1.2\\GXEE8P\" --target P1920 --optimization Maximum"
+    }
+  }
+}
