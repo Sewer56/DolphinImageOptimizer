@@ -17,7 +17,7 @@ namespace DolphinImageOptimizer.Tools
 
         public static async Task RunTexConvForFile(string file, string format)
         {
-            await RunProcessAsync("Tools/texconv.exe", $"-f {format} -m 1 -r:keep -bc x -o \"{Path.GetDirectoryName(file)}\" \"{file}\"");
+            await RunProcessAsync("Tools/texconv.exe", $"-f {format} -if LINEAR_DITHER -m 1 -r:keep -bc dx -o \"{Path.GetDirectoryName(file)}\" \"{file}\"");
         }
 
         public static async Task RunPingoForDirectoryRecursive(string directory, string optimizationLevel)
