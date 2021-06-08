@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
@@ -68,7 +69,7 @@ namespace DolphinImageOptimizer.Utiltiies
         /// <summary>
         /// Checks if the image contains any transparency.
         /// </summary>
-        public static unsafe bool HasTransparency(Bitmap bmp)
+        public static unsafe bool HasMultiBitTransparency(Bitmap bmp)
         {
             // Lock native memory. 
             Rectangle rect     = new Rectangle(0, 0, bmp.Width, bmp.Height);
@@ -79,13 +80,19 @@ namespace DolphinImageOptimizer.Utiltiies
             int bytes  = bmpData.Stride * bmp.Height;
 
             bool hasTransparency = false;
+            int lastTransparencyValue = -1;
             for (int x = 3; x < bytes; x += 4)
             {
-                if (data[x] != 255)
+                if (data[x] == 255) 
+                    continue;
+
+                if (lastTransparencyValue != -1)
                 {
                     hasTransparency = true;
                     break;
                 }
+
+                lastTransparencyValue = data[x];
             }
 
             // Unlock the bits.

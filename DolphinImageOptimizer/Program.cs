@@ -220,7 +220,7 @@ namespace DolphinImageOptimizer
                 image  = System.Drawing.Image.FromStream(stream);
                 bitmap = new Bitmap(image);
 
-                if (Image.HasTransparency(bitmap))
+                if (Image.HasMultiBitTransparency(bitmap))
                 {
                     await Tools.Tools.RunTexConvForFile(file, PublishFormat.DXT5.ToTexConvFormat());
                 }
