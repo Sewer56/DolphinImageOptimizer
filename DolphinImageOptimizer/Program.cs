@@ -59,6 +59,7 @@ namespace DolphinImageOptimizer
 
         private static async Task Run(Options options)
         {
+            Regex.Init(options.RegexPattern);
             bool convertToDds = options.Publish != PublishFormat.None || !string.IsNullOrEmpty(options.PublishAdvanced);
             if (convertToDds)
                 options.Optimization = PngOptimizationLevel.Minimum;

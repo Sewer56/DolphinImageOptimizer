@@ -5,6 +5,8 @@ namespace DolphinImageOptimizer
 {
     internal class Options
     {
+        public const string DefaultRegexPattern = @"(?:tex1_)?(\d*)x(\d*)_.*";
+
         [Option(Required = true, HelpText = "The folder to optimize.")]
         public string Source { get; private set; }
 
@@ -22,5 +24,8 @@ namespace DolphinImageOptimizer
 
         [Option(Required = false, HelpText = "Riders.Tweakbox specific. Compresses output DDS files with LZ4. Use with R8G8B8A8.", Default = false)]
         public bool UseLZ4 { get; private set; }
+
+        [Option(Required = false, HelpText = "Regular expression pattern for obtaining original intended image size from texture name.", Default = DefaultRegexPattern)]
+        public string RegexPattern { get; private set; }
     }
 }
