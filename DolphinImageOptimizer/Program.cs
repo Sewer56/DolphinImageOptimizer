@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -169,7 +170,7 @@ namespace DolphinImageOptimizer
                 // Partition for each thread.
                 var tasks = files.Select(async file =>
                 {
-                    await AutoDdsConvert(file, options.GenerateMipmaps);
+                    await AutoDdsConvert(file, options.GenerateMipmaps.Value);
                 });
 
                 await Task.WhenAll(tasks);
@@ -180,14 +181,14 @@ namespace DolphinImageOptimizer
                 if (!string.IsNullOrEmpty(options.PublishAdvanced))
                     format = options.PublishAdvanced;
                 
-                await Tools.Tools.RunTexConvForDirectoryRecursive(options.Source, format, options.GenerateMipmaps);
+                await Tools.Tools.RunTexConvForDirectoryRecursive(options.Source, format, options.GenerateMipmaps.Value);
             }
 
             foreach (var file in files)
                 File.Delete(file);
 
             // Compress with LZ4 if needed
-            if (options.UseLZ4)
+            if (options.UseLZ4.Value)
             {
                 Console.WriteLine("Compressing DDS");
                 var ddsFiles    = Directory.GetFiles(options.Source, DdsFilter, SearchOption.AllDirectories);

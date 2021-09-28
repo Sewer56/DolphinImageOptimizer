@@ -23,12 +23,12 @@ namespace DolphinImageOptimizer
         public string PublishAdvanced { get; private set; }
 
         [Option(Required = false, HelpText = "Riders.Tweakbox specific. Compresses output DDS files with LZ4. Use with R8G8B8A8.", Default = false)]
-        public bool UseLZ4 { get; private set; }
+        public bool? UseLZ4 { get; private set; }
+
+        [Option(Required = false, HelpText = "Generates mipmaps if set to true. Else set to false.", Default = true)]
+        public bool? GenerateMipmaps { get; private set; }
 
         [Option(Required = false, HelpText = "Regular expression pattern for obtaining original intended image size from texture name.", Default = DefaultRegexPattern)]
         public string RegexPattern { get; private set; }
-
-        [Option(Required = false, HelpText = "True to generate mipmaps.", Default = true)]
-        public bool GenerateMipmaps { get; private set; }
     }
 }
