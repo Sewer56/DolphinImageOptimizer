@@ -10,14 +10,16 @@ namespace DolphinImageOptimizer.Tools
     /// </summary>
     public static class Tools
     {
-        public static async Task RunTexConvForDirectoryRecursive(string directory, string format)
+        private static string GetMipMapFlag(bool generateMipmaps) => generateMipmaps ? "-m 0" : "-m 1";
+
+        public static async Task RunTexConvForDirectoryRecursive(string directory, string format, bool generateMipmaps)
         {
-            await RunProcessAsync("Tools/texconv.exe", $"-f {format} -r:keep -bc dx -o \"{directory}\" \"{directory + "\\" + Program.PngFilter}\"");
+            await RunProcessAsync("Tools/texconv.exe", $"-f {format} -r:keep {GetMipMapFlag(generateMipmaps)} -bc dx -o \"{directory}\" \"{directory + "\\" + Program.PngFilter}\"");
         }
 
-        public static async Task RunTexConvForFile(string file, string format)
+        public static async Task RunTexConvForFile(string file, string format, bool generateMipmaps)
         {
-            await RunProcessAsync("Tools/texconv.exe", $"-f {format} -r:keep -bc dx -o \"{Path.GetDirectoryName(file)}\" \"{file}\"");
+            await RunProcessAsync("Tools/texconv.exe", $"-f {format} -r:keep {GetMipMapFlag(generateMipmaps)} -bc dx -o \"{Path.GetDirectoryName(file)}\" \"{file}\"");
         }
 
         public static async Task RunPingoForDirectoryRecursive(string directory, string optimizationLevel)

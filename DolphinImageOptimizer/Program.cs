@@ -169,7 +169,7 @@ namespace DolphinImageOptimizer
                 // Partition for each thread.
                 var tasks = files.Select(async file =>
                 {
-                    await AutoDdsConvert(file);
+                    await AutoDdsConvert(file, options.GenerateMipmaps);
                 });
 
                 await Task.WhenAll(tasks);
@@ -180,7 +180,7 @@ namespace DolphinImageOptimizer
                 if (!string.IsNullOrEmpty(options.PublishAdvanced))
                     format = options.PublishAdvanced;
                 
-                await Tools.Tools.RunTexConvForDirectoryRecursive(options.Source, format);
+                await Tools.Tools.RunTexConvForDirectoryRecursive(options.Source, format, options.GenerateMipmaps);
             }
 
             foreach (var file in files)
@@ -210,7 +210,7 @@ namespace DolphinImageOptimizer
             }
         }
 
-        private static async Task AutoDdsConvert(string file)
+        private static async Task AutoDdsConvert(string file, bool generateMipmaps)
         {
             var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             System.Drawing.Image image = null;
@@ -223,11 +223,11 @@ namespace DolphinImageOptimizer
 
                 if (Image.HasMultiBitTransparency(bitmap))
                 {
-                    await Tools.Tools.RunTexConvForFile(file, PublishFormat.DXT5.ToTexConvFormat());
+                    await Tools.Tools.RunTexConvForFile(file, PublishFormat.DXT5.ToTexConvFormat(), generateMipmaps);
                 }
                 else
                 {
-                    await Tools.Tools.RunTexConvForFile(file, PublishFormat.DXT1.ToTexConvFormat());
+                    await Tools.Tools.RunTexConvForFile(file, PublishFormat.DXT1.ToTexConvFormat(), generateMipmaps);
                 }
             }
             catch (Exception ex)

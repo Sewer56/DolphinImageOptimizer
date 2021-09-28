@@ -27,5 +27,8 @@ namespace DolphinImageOptimizer
 
         [Option(Required = false, HelpText = "Regular expression pattern for obtaining original intended image size from texture name.", Default = DefaultRegexPattern)]
         public string RegexPattern { get; private set; }
+
+        [Option(Required = false, HelpText = "True to generate mipmaps.", Default = true)]
+        public bool GenerateMipmaps { get; private set; }
     }
 }
